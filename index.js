@@ -171,7 +171,7 @@ let init = () => {
       'method': 'POST',
       url,
       'headers': {
-        'token': 'lxcgj99009910899009928349900991990099[483]990099159667679076199009900199009939c4cbbbfb14db3f89724d35a8dc0194'
+        'token': 'lxcgj99009910899009928349900991990099[483]99009915967642074839900990019900992acc14f22c38801178c580091da43762'
       },
       formData: {
       }
@@ -198,7 +198,7 @@ let init = () => {
               // let time = new Date(ele.report_time).getTime()
               // console.log(time)
               // if (time >= 1535760000000 && time <= 1553993143000) {
-                imgArr.push(`http://api.cygps.com:8080/jsonapi/base/vehicle.fd?_id=${e}`)
+                imgArr.push(`http://api.cygps.com:8080/jsonapi/base/vehicle.fd?_id=${e}&time=${ele.report_time}`)
               // }
               // console.log(imgArr)
               // imgUpload(ele)
@@ -272,12 +272,13 @@ let init = () => {
 let imgUpload = () => {
   let reptileMove = (url, callback) => {
     // console.log(url)
-    let id = url.split('=')
-    var filename = "./img/" + id + '.png';
+    // let id = url.split('=')
+    let query = url.split(/id=|&time=/g)
+    var filename = "./img/" + query[1] + '_' + query[2] + '.png';
     fs.exists(filename, function (b) {
       if (!b) {
-        request({url: url}).pipe(fs.createWriteStream('./img/' + id[1] + '.png')).on("close", function (err) {
-          console.log("文件[" + id[1] + "]下载完毕");
+        request({url: url}).pipe(fs.createWriteStream('./img/' + query[1] + '_' + query[2]  + '.png')).on("close", function (err) {
+          console.log("文件[" + query[1] + "]下载完毕");
           // callback()
         }).on('err', function (err) {
           errArr.push(url)
@@ -305,15 +306,6 @@ let imgUpload = () => {
 }
 
 init()
-// request.post({
-//   url: 'https://saas-test.legutech.com//api/file/uploads',
-//   headers: {
-//    "content-type": "multipart/form-data",
-//    authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJSRURJUyI6IjEyOTA0NjEzODE0NDY0NzU3NzgiLCJpc3MiOiJzYWFzX2FwaS1zZXJ2aWNlX2lzcyIsIklEIjoiMTIwMTc5Njc3Nzk5NzUxMjcwNSIsIlRZUEUiOiJ0ZW5hbnQiLCJpYXQiOjE1OTY1MDQ5NDMsIk5BTUUiOiJsaXhpYWNoZW5nZ3VhbiJ9.AIZwDyNUE4T6A9nIx8PSNdDyNNP3INlpCMWQ-Pp78fZ3uwyLTWE6pcXvkyxqfhLBudze1pESDwIGARWCDVdzgA'
-//   }
-//  }), function (err, body) {
-//    console.log(body)
-//  })
 
 
 // function aaa () {
